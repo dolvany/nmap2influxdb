@@ -1,5 +1,16 @@
 Python script to parse nmap xml output to influxdb input. Depends on xmltodict (apt-get install python3-xmltodict). Below is sample influxdb input.
-
+```
+$ nmap -V
+Nmap version 7.93
+```
+```
+$ python3 -V
+Python 3.11.2
+```
+```
+$ python3 -c "import xmltodict; print(xmltodict.__version__)"
+0.13.0
+```
 ```
 run,exit="success" up=25,down=999,total=1024,duration=3700.76 1742075846
 result,ip="192.168.4.1",mac="9C:57:BC:C4:DF:12",vendor="eero",proto="tcp",port="53",service="domain" avail=1 1742073911
