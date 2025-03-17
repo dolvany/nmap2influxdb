@@ -1,4 +1,4 @@
-Python script to parse nmap xml output to influxdb input. Depends on xmltodict (apt-get install python3-xmltodict). Below is sample influxdb input.
+Python script to parse nmap xml output into influxdb input. Depends on xmltodict (apt-get install python3-xmltodict). Below is sample influxdb input.
 ```
 $ nmap -V
 Nmap version 7.93
