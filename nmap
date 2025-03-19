@@ -4,20 +4,20 @@ import xmltodict
 with open('nmap.xml') as fd:
   d=xmltodict.parse(fd.read())
 
-print("run,exit=\"{}\" up={},down={},total={},duration={} {}".format(d["nmaprun"]["runstats"]["finished"]["@exit"],d["nmaprun"]["runstats"]["hosts"]["@up"],d["nmaprun"]["runstats"]["hosts"]["@down"],d["nmaprun"]["runstats"]["hosts"]["@total"],d["nmaprun"]["runstats"]["finished"]["@elapsed"],d["nmaprun"]["runstats"]["finished"]["@time"]))
+print("run,exit={} up={},down={},total={},duration={} {}".format(d["nmaprun"]["runstats"]["finished"]["@exit"],d["nmaprun"]["runstats"]["hosts"]["@up"],d["nmaprun"]["runstats"]["hosts"]["@down"],d["nmaprun"]["runstats"]["hosts"]["@total"],d["nmaprun"]["runstats"]["finished"]["@elapsed"],d["nmaprun"]["runstats"]["finished"]["@time"]))
 for i in d["nmaprun"]["host"]:
   if type(i["address"]) is dict:
     i["address"]=[i["address"]]
   if "port" in i["ports"] and type(i["ports"]["port"]) is dict:
     i["ports"]["port"]=[i["ports"]["port"]]
-  pre="result,ip=\"{}\"".format(i["address"][0]["@addr"])
+  pre="result,ip={}".format(i["address"][0]["@addr"])
   suf="avail=1 {}".format(i["@endtime"])
   if len(i["address"])==2:
-    pre="{},mac=\"{}\"".format(pre,i["address"][1]["@addr"])
+    pre="{},mac={}".format(pre,i["address"][1]["@addr"])
     if "@vendor" in i["address"][1]:
-      pre="{},vendor=\"{}\"".format(pre,i["address"][1]["@vendor"])
+      suf="vendor=\"{}\",{}".format(i["address"][1]["@vendor"],suf)
   if "port" in i["ports"]:
     for p in i["ports"]["port"]:
-      print("{},proto=\"{}\",port=\"{}\",service=\"{}\" {}".format(pre,p["@protocol"],p["@portid"],p["service"]["@name"],suf))
+      print("{},proto={},port={},service={} {}".format(pre,p["@protocol"],p["@portid"],p["service"]["@name"],suf))
   else:
     print("{} {}".format(pre,suf))
